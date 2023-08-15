@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: #58f216;
+}
+
+
+body{
+    font-family: 'VT323', monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+#calculator{
+    background-color: #7a7979;
+    width: 400px;
+    height: 600px;
+}
+
+button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.fake-button{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid black;
+    text-decoration: none;
+}
+
+.fake-button-2{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    width: 50px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid black;
+    text-decoration: none;
+}
