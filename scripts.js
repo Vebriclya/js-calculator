@@ -3,6 +3,7 @@ const numberButtons = document.querySelectorAll(".fake-button");
 const operatorButtons = document.querySelectorAll(".fake-button-2");
 let operatorSymbol = "";
 const equalsButton = document.querySelector(".fake-button-3");
+const miscButtons = document.querySelectorAll(".fake-button-4");
 let operatorPressed = false;
 const equalsButtonPressed = false;
 const addition = (a, b) => a + b;
@@ -91,6 +92,30 @@ operatorButtons.forEach((button) => {
         console.log(operatorSymbol);
         displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
         operatorPressed = true;
+        break;
+    }
+  });
+});
+
+miscButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    switch (button.id) {
+      case "backspace":
+        console.log("backspace pressed");
+        //deletes last character entered
+        break;
+      case "c":
+        console.log("c pressed");
+        //clears everything
+        displayContainer.textContent = "";
+        operatorPressed = false;
+        firstNumber = "";
+        secondNumber = "";
+        operator = "";
+        break;
+      case "ce":
+        console.log("ce pressed");
+        // clears last number/operation
         break;
     }
   });
