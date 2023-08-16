@@ -102,7 +102,47 @@ miscButtons.forEach((button) => {
     switch (button.id) {
       case "backspace":
         console.log("backspace pressed");
-        //deletes last character entered
+        // To delete if there is a second number
+        if (
+          firstNumber &&
+          operator &&
+          (secondNumber !== undefined || secondNumber !== "")
+        ) {
+          if (secondNumber.toString().length === 1) {
+            secondNumber = "";
+            displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
+          } else {
+            let numString = secondNumber.toString();
+            secondNumber = parseInt(numString.slice(0, -1));
+            console.log(secondNumber);
+            displayContainer.textContent = `${firstNumber}${operatorSymbol}${secondNumber}`;
+          }
+        } // To delete if there is an operator
+        /*
+        else if (
+          (secondNumber === "" || secondNumber === undefined) &&
+          operator &&
+          firstNumber
+        ) {
+          operatorPressed = false;
+          operator = "";
+          operatorSymbol = "";
+          displayContainer.textContent = `${firstNumber}`;
+        } */ /*else if (
+          (secondNumber === 0 || secondNumber === undefined) &&
+          (operator === "" || operator === undefined) &&
+          firstNumber !== 0
+        ) {
+          if (firstNumber.toString().length === 1) {
+            firstNumber = "";
+          } else {
+            let numString = firstNumber.toString();
+            firstNumber = parseInt(numString.slice(0, -1));
+            console.log(firstNumber);
+          }
+        } else {
+          console.log("An error has occured in the backspace function");
+        }*/
         break;
       case "c":
         console.log("c pressed");
