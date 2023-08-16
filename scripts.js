@@ -1,15 +1,13 @@
+const displayContainer = document.querySelector("#display");
 const numberButtons = document.querySelectorAll(".fake-button");
-numberButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    console.log(`${button.id} has been pressed`);
-  });
-});
-
+// These buttons need changing to querySelectorAll
 const addButton = document.querySelector("#addition");
 const subtractButton = document.querySelector("#subtraction");
 const divideButton = document.querySelector("#multiplication");
 const multiplyButton = document.querySelector("#division");
+const equalsButton = document.querySelector("#equals");
 const operatorPressed = false;
+const equalsButtonPressed = false;
 const addition = (a, b) => a + b;
 const subtraction = (a, b) => a - b;
 const multiplication = (a, b) => a * b;
@@ -40,6 +38,27 @@ function operate(firstNumber, secondNumber, operator) {
   }
 }
 
+/* ---------- EVENT LISTENERS ---------- */
+
+numberButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    console.log(`${button.id} has been pressed`);
+    const numberValue = button.textContent;
+
+    if (firstNumber === undefined) {
+      firstNumber = parseInt(numberValue);
+      displayContainer.textContent = firstNumber;
+    } else if (firstNumber !== undefined && !operatorPressed) {
+      firstNumber = parseInt(firstNumber.toString() + numberValue);
+      displayContainer.textContent = firstNumber;
+    } else if (secondNumber === undefined && operatorPressed) {
+      secondNumber = parseInt(numberValue);
+    } else if (secondNumber !== undefined && !equalsButtonPressed) {
+      secondNumber = parseInt(secondNumber.toString() + numberValue);
+      displayContainer.textContent = ``;
+    }
+  });
+});
 /*
 addButton.addEventListener("click", () => {
   if ((firstNumber = undefined)) {
