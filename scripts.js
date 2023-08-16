@@ -103,14 +103,11 @@ miscButtons.forEach((button) => {
       case "backspace":
         console.log("backspace pressed");
         // To delete if there is a second number
-        if (
-          firstNumber &&
-          operator &&
-          (secondNumber !== undefined || secondNumber !== "")
-        ) {
+        if (secondNumber !== undefined && operator && firstNumber) {
           if (secondNumber.toString().length === 1) {
-            secondNumber = "";
+            secondNumber = undefined;
             displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
+          } else if (!secondNumber.toString()) {
           } else {
             let numString = secondNumber.toString();
             secondNumber = parseInt(numString.slice(0, -1));
@@ -118,46 +115,46 @@ miscButtons.forEach((button) => {
             displayContainer.textContent = `${firstNumber}${operatorSymbol}${secondNumber}`;
           }
         } // To delete if there is an operator
-        /*
-        else if (
-          (secondNumber === "" || secondNumber === undefined) &&
-          operator &&
-          firstNumber
-        ) {
+        else if (secondNumber === undefined && operator && firstNumber) {
+          console.log("You're in the second loop");
           operatorPressed = false;
-          operator = "";
-          operatorSymbol = "";
+          operator = undefined;
+          operatorSymbol = undefined;
           displayContainer.textContent = `${firstNumber}`;
-        } */ /*else if (
-          (secondNumber === 0 || secondNumber === undefined) &&
-          (operator === "" || operator === undefined) &&
-          firstNumber !== 0
+        } // To delete if there is a first number
+        else if (
+          secondNumber === undefined &&
+          operator === undefined &&
+          firstNumber !== undefined
         ) {
+          console.log("You're in the third loop");
           if (firstNumber.toString().length === 1) {
-            firstNumber = "";
+            firstNumber = undefined;
+            displayContainer.textContent = "";
           } else {
             let numString = firstNumber.toString();
             firstNumber = parseInt(numString.slice(0, -1));
             console.log(firstNumber);
+            displayContainer.textContent = `${firstNumber}`;
           }
         } else {
           console.log("An error has occured in the backspace function");
-        }*/
+        }
         break;
       case "c":
         console.log("c pressed");
         //clears everything
         displayContainer.textContent = "";
         operatorPressed = false;
-        firstNumber = "";
-        secondNumber = "";
-        operator = "";
+        firstNumber = undefined;
+        secondNumber = undefined;
+        operator = undefined;
         break;
       case "ce":
         console.log("ce pressed");
         // clears last number/operation
         if (firstNumber && operator && secondNumber) {
-          secondNumber = "";
+          secondNumber = undefined;
           displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
         } else if (
           firstNumber &&
@@ -165,15 +162,15 @@ miscButtons.forEach((button) => {
           (secondNumber === "" || secondNumber === undefined)
         ) {
           operatorPressed = false;
-          operator = "";
-          operatorSymbol = "";
+          operator = undefined;
+          operatorSymbol = undefined;
           displayContainer.textContent = `${firstNumber}`;
         } else if (
           firstNumber &&
           (operator === "" || operator === undefined) &&
           (secondNumber === "" || secondNumber === undefined)
         ) {
-          firstNumber = "";
+          firstNumber = undefined;
           displayContainer.textContent = "";
         }
         break;
@@ -185,6 +182,6 @@ equalsButton.addEventListener("click", () => {
   result = operate(firstNumber, secondNumber, operator);
   displayContainer.textContent = `${result}`;
   operatorPressed = false;
-  firstNumber = "";
-  secondNumber = "";
+  firstNumber = undefined;
+  secondNumber = undefined;
 });
