@@ -1,14 +1,10 @@
-const displayContainer = document.querySelector("#display");
-const numberOne = document.querySelector("#numberOne");
-const numberTwo = document.querySelector("#numberTwo");
-const numberThree = document.querySelector("#numberThree");
-const numberFour = document.querySelector("#numberFour");
-const numberFive = document.querySelector("#numberFive");
-const numberSix = document.querySelector("#numberSix");
-const numberSeven = document.querySelector("#numberSeven");
-const numberEight = document.querySelector("#numberEight");
-const numberNine = document.querySelector("#numberNine");
-const numberZero = document.querySelector("#numberZero");
+const numberButtons = document.querySelectorAll(".fake-button");
+numberButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    console.log(`${button.id} has been pressed`);
+  });
+});
+
 const addButton = document.querySelector("#addition");
 const subtractButton = document.querySelector("#subtraction");
 const divideButton = document.querySelector("#multiplication");
@@ -44,100 +40,7 @@ function operate(firstNumber, secondNumber, operator) {
   }
 }
 
-numberOne.addEventListener("click", () => {
-  console.log("1 button pressed");
-  if ((firstNumber = undefined)) {
-    firstNumber = 1;
-    displayContainer.textContent = firstNumber;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "1";
-  } else {
-    secondNumber = 1;
-  }
-
-  displayContainer.append(firstNumber);
-});
-numberTwo.addEventListener("click", () => {
-  if ((firstNumber = undefined)) {
-    firstNumber = 2;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "2";
-  } else {
-    secondNumber = 2;
-  }
-});
-numberThree.addEventListener("click", () => {
-  if ((firstNumber = undefined)) {
-    firstNumber = 3;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "3";
-  } else {
-    secondNumber = 3;
-  }
-});
-numberFour.addEventListener("click", () => {
-  if ((firstNumber = undefined)) {
-    firstNumber = 4;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "4";
-  } else {
-    secondNumber = 4;
-  }
-});
-numberFive.addEventListener("click", () => {
-  if ((firstNumber = undefined)) {
-    firstNumber = 5;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "5";
-  } else {
-    secondNumber = 5;
-  }
-});
-numberSix.addEventListener("click", () => {
-  if ((firstNumber = undefined)) {
-    firstNumber = 6;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "6";
-  } else {
-    secondNumber = 6;
-  }
-});
-numberSeven.addEventListener("click", () => {
-  if ((firstNumber = undefined)) {
-    firstNumber = 7;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "7";
-  } else {
-    secondNumber = 7;
-  }
-});
-numberEight.addEventListener("click", () => {
-  if ((firstNumber = undefined)) {
-    firstNumber = 8;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "8";
-  } else {
-    secondNumber = 8;
-  }
-});
-numberNine.addEventListener("click", () => {
-  if ((firstNumber = undefined)) {
-    firstNumber = 9;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "9";
-  } else {
-    secondNumber = 9;
-  }
-});
-numberZero.addEventListener("click", () => {
-  if ((firstNumber = undefined)) {
-    firstNumber = 0;
-  } else if (firstNumber != undefined && operatorPressed === false) {
-    firstNumber + "0";
-  } else {
-    secondNumber = 0;
-  }
-});
+/*
 addButton.addEventListener("click", () => {
   if ((firstNumber = undefined)) {
     firstNumber = 1;
@@ -145,6 +48,4 @@ addButton.addEventListener("click", () => {
     secondNumber = 1;
   }
 });
-subtractButton.addEventListener("click", () => {});
-divideButton.addEventListener("click", () => {});
-multiplyButton.addEventListener("click", () => {});
+*/
