@@ -47,6 +47,15 @@ button{
     flex-direction: row;
 }
 
+#misc-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 294px;
+    height: 50px;
+}
+
 #numbers{
     display: flex;
     flex-wrap: wrap;
@@ -69,7 +78,6 @@ button{
     height: 90px;
     margin: 5px;
     display: flex;
-    margin-bottom: 40px;
     border-radius: 12px;
     align-items: center;
     justify-items: center;
@@ -124,6 +132,20 @@ button{
     text-decoration: none;
 }
 
+.fake-button-4{
+    box-sizing: border-box;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+    width: 94px;
+    height: 44px;
+    border: 2px solid #58f216;
+}
+
 .fake-button:hover{
     cursor: pointer;
     color: black;
@@ -137,6 +159,12 @@ button{
 }
 
 .fake-button-3:hover{
+    cursor: pointer;
+    color: black;
+    background-color: #58f216;
+}
+
+.fake-button-4:hover{
     cursor: pointer;
     color: black;
     background-color: #58f216;

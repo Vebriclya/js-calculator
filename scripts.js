@@ -1,6 +1,5 @@
 const displayContainer = document.querySelector("#display");
 const numberButtons = document.querySelectorAll(".fake-button");
-// These buttons need changing to querySelectorAll
 const operatorButtons = document.querySelectorAll(".fake-button-2");
 let operatorSymbol = "";
 const equalsButton = document.querySelector(".fake-button-3");
@@ -14,9 +13,10 @@ const division = (a, b) => a / b;
 let firstNumber;
 let operator;
 let secondNumber;
+let result;
 
 function operate(firstNumber, secondNumber, operator) {
-  let result = 0;
+  result = 0;
 
   switch (operator) {
     case "add":
@@ -34,6 +34,8 @@ function operate(firstNumber, secondNumber, operator) {
     default:
       break;
   }
+
+  return result;
 }
 
 /* ---------- EVENT LISTENERS ---------- */
@@ -92,4 +94,12 @@ operatorButtons.forEach((button) => {
         break;
     }
   });
+});
+
+equalsButton.addEventListener("click", () => {
+  result = operate(firstNumber, secondNumber, operator);
+  displayContainer.textContent = `${result}`;
+  operatorPressed = false;
+  firstNumber = "";
+  secondNumber = "";
 });
