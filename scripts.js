@@ -116,6 +116,26 @@ miscButtons.forEach((button) => {
       case "ce":
         console.log("ce pressed");
         // clears last number/operation
+        if (firstNumber && operator && secondNumber) {
+          secondNumber = "";
+          displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
+        } else if (
+          firstNumber &&
+          operator &&
+          (secondNumber === "" || secondNumber === undefined)
+        ) {
+          operatorPressed = false;
+          operator = "";
+          operatorSymbol = "";
+          displayContainer.textContent = `${firstNumber}`;
+        } else if (
+          firstNumber &&
+          (operator === "" || operator === undefined) &&
+          (secondNumber === "" || secondNumber === undefined)
+        ) {
+          firstNumber = "";
+          displayContainer.textContent = "";
+        }
         break;
     }
   });
