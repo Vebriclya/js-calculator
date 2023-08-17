@@ -23,6 +23,13 @@ const division = (a, b) => a / b;
 
 /* ---------- FUNCTIONS ---------- */
 
+function removeOperatorIds() {
+  addButton.removeAttribute("id");
+  subtractButton.removeAttribute("id");
+  multiplyButton.removeAttribute("id");
+  divideButton.removeAttribute("id");
+}
+
 function clearCalculation() {
   displayContainer.textContent = ``;
   operatorPressed = false;
@@ -30,6 +37,7 @@ function clearCalculation() {
   secondNumber = undefined;
   operator = undefined;
   result = undefined;
+  removeOperatorIds();
 }
 
 function operate(firstNumber, secondNumber, operator) {
@@ -51,7 +59,7 @@ function operate(firstNumber, secondNumber, operator) {
     default:
       break;
   }
-
+  removeOperatorIds();
   displayContainer.textContent = result;
   return result;
 }
@@ -63,7 +71,7 @@ numberButtons.forEach((button) => {
     console.log(`${button.textContent} has been pressed`);
     const numberValue = button.textContent;
 
-    if (firstNumber === undefined) {
+    if (firstNumber === undefined || firstNumber === result) {
       firstNumber = parseInt(numberValue);
       displayContainer.textContent = firstNumber;
     } else if (firstNumber !== undefined && !operatorPressed) {
@@ -82,16 +90,17 @@ numberButtons.forEach((button) => {
 addButton.addEventListener("click", () => {
   // if there is a second number, calculate the result and use it as the first number of the next operation (make it the = button)
   if (firstNumber && operator && secondNumber) {
-    console.log("add pressed (with old calc)");
     result = operate(firstNumber, secondNumber, operator);
     operatorPressed = true;
     firstNumber = result;
     secondNumber = undefined;
     operator = "addition";
+    addButton.setAttribute("id", "operator-pressed");
   } else {
     console.log("add pressed");
     operator = "addition";
     operatorPressed = true;
+    addButton.setAttribute("id", "operator-pressed");
   }
   // otherwise act normal
 });
@@ -103,9 +112,11 @@ subtractButton.addEventListener("click", () => {
     firstNumber = result;
     secondNumber = undefined;
     operator = "subtraction";
+    subtractButton.setAttribute("id", "operator-pressed");
   } else {
     operator = "subtraction";
     operatorPressed = true;
+    subtractButton.setAttribute("id", "operator-pressed");
   }
 });
 
@@ -118,9 +129,11 @@ divideButton.addEventListener("click", () => {
     firstNumber = result;
     secondNumber = undefined;
     operator = "division";
+    divideButton.setAttribute("id", "operator-pressed");
   } else {
     operator = "division";
     operatorPressed = true;
+    divideButton.setAttribute("id", "operator-pressed");
   }
 });
 
@@ -131,9 +144,11 @@ multiplyButton.addEventListener("click", () => {
     firstNumber = result;
     secondNumber = undefined;
     operator = "multiplication";
+    multiplyButton.setAttribute("id", "operator-pressed");
   } else {
     operator = "multiplication";
     operatorPressed = true;
+    multiplyButton.setAttribute("id", "operator-pressed");
   }
 });
 
@@ -221,6 +236,7 @@ equalsButton.addEventListener("click", () => {
       displayContainer.textContent = `${firstNumber}`;
     } else {
       secondNumber = 0;
+      removeOperatorIds();
     }
   } else if (
     (firstNumber === 0 || secondNumber === 0) &&
