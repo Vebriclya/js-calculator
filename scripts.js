@@ -54,10 +54,10 @@ numberButtons.forEach((button) => {
       displayContainer.textContent = firstNumber;
     } else if (secondNumber === undefined && operatorPressed) {
       secondNumber = parseInt(numberValue);
-      displayContainer.textContent = `${firstNumber}${operatorSymbol}${secondNumber}`;
+      displayContainer.textContent = `${secondNumber}`;
     } else if (secondNumber !== undefined && !equalsButtonPressed) {
       secondNumber = parseInt(secondNumber.toString() + numberValue);
-      displayContainer.textContent = `${firstNumber}${operatorSymbol}${secondNumber}`;
+      displayContainer.textContent = `${secondNumber}`;
     }
   });
 });
@@ -66,32 +66,81 @@ operatorButtons.forEach((button) => {
   button.addEventListener("click", () => {
     switch (button.id) {
       case "addition":
-        operatorSymbol = " + ";
-        operator = "add";
-        console.log(operatorSymbol);
-        displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
-        operatorPressed = true;
+        // if there is a second number, calculate the result and use it as the first number of the next operation (make it the = button)
+        if (firstNumber && operator && secondNumber) {
+          result = operate(firstNumber, secondNumber, operator);
+          displayContainer.textContent = `${result}`;
+          operatorPressed = true;
+          firstNumber = result;
+          secondNumber = undefined;
+          operatorSymbol = " + ";
+          operator = "add";
+          displayContainer.textContent = `${operatorSymbol}`;
+        } else {
+          operatorSymbol = " + ";
+          operator = "add";
+          console.log(operatorSymbol);
+          displayContainer.textContent = `${operatorSymbol}`;
+          operatorPressed = true;
+        }
+        // otherwise act normal
         break;
       case "subtraction":
-        operatorSymbol = " - ";
-        operator = "subtract";
-        console.log(operatorSymbol);
-        displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
-        operatorPressed = true;
+        if (firstNumber && operator && secondNumber) {
+          result = operate(firstNumber, secondNumber, operator);
+          displayContainer.textContent = `${result}`;
+          operatorPressed = true;
+          firstNumber = result;
+          secondNumber = undefined;
+          operatorSymbol = " - ";
+          operator = "subtract";
+          displayContainer.textContent = `${operatorSymbol}`;
+        } else {
+          operatorSymbol = " - ";
+          operator = "subtract";
+          console.log(operatorSymbol);
+          displayContainer.textContent = `${operatorSymbol}`;
+          operatorPressed = true;
+        }
         break;
       case "division":
-        operatorSymbol = " ÷ ";
-        operator = "divide";
-        console.log(operatorSymbol);
-        displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
-        operatorPressed = true;
+        if (firstNumber === 0 || secondNumber === 0) {
+          displayContainer.textContent("You know that won't work");
+        } else if (firstNumber && secondNumber && operator) {
+          result = operate(firstNumber, secondNumber, operator);
+          displayContainer.textContent = `${result}`;
+          operatorPressed = true;
+          firstNumber = result;
+          secondNumber = undefined;
+          operatorSymbol = " ÷ ";
+          operator = "divide";
+          console.log(operatorSymbol);
+          displayContainer.textContent = `${operatorSymbol}`;
+        } else {
+          operatorSymbol = " ÷ ";
+          operator = "divide";
+          console.log(operatorSymbol);
+          displayContainer.textContent = `${operatorSymbol}`;
+          operatorPressed = true;
+        }
         break;
       case "multiplication":
-        operatorSymbol = " x ";
-        operator = "multiply";
-        console.log(operatorSymbol);
-        displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
-        operatorPressed = true;
+        if (firstNumber && secondNumber && operator) {
+          result = operate(firstNumber, secondNumber, operator);
+          displayContainer.textContent = `${result}`;
+          operatorPressed = true;
+          firstNumber = result;
+          secondNumber = undefined;
+          operatorSymbol = " x ";
+          operator = "multiply";
+          displayContainer.textContent = `${operatorSymbol}`;
+        } else {
+          operatorSymbol = " x ";
+          operator = "multiply";
+          console.log(operatorSymbol);
+          displayContainer.textContent = `${operatorSymbol}`;
+          operatorPressed = true;
+        }
         break;
     }
   });
@@ -179,9 +228,29 @@ miscButtons.forEach((button) => {
 });
 
 equalsButton.addEventListener("click", () => {
-  result = operate(firstNumber, secondNumber, operator);
-  displayContainer.textContent = `${result}`;
-  operatorPressed = false;
-  firstNumber = result;
-  secondNumber = undefined;
+  if (!secondNumber) {
+    console.log("There's no second number");
+    if (operator === "divide") {
+      operatorPressed = false;
+      operator = undefined;
+      operatorSymbol = undefined;
+      displayContainer.textContent = `${firstNumber}`;
+    } else {
+      secondNumber = 0;
+    }
+  } else if (
+    (firstNumber === 0 || secondNumber === 0) &&
+    operator === "divide"
+  ) {
+    displayContainer.textContent = "pack it in.";
+    operatorPressed = false;
+    firstNumber = undefined;
+    secondNumber = undefined;
+  } else {
+    result = operate(firstNumber, secondNumber, operator);
+    displayContainer.textContent = `${result}`;
+    operatorPressed = false;
+    firstNumber = result;
+    secondNumber = undefined;
+  }
 });
