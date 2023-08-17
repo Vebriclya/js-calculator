@@ -182,6 +182,6 @@ equalsButton.addEventListener("click", () => {
   result = operate(firstNumber, secondNumber, operator);
   displayContainer.textContent = `${result}`;
   operatorPressed = false;
-  firstNumber = undefined;
+  firstNumber = result;
   secondNumber = undefined;
 });
