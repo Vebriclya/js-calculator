@@ -102,7 +102,7 @@ button{
     text-decoration: none;
 }
 
-.fake-button-2{
+.addition, .subtraction, .multiplication, .division{
     box-sizing: border-box;
     font-size: 40px;
     display: flex;
@@ -117,7 +117,7 @@ button{
     text-decoration: none;
 }
 
-.fake-button-3{
+.equals{
     box-sizing: border-box;
     font-size: 40px;
     display: flex;
@@ -152,13 +152,13 @@ button{
     background-color: #58f216;
 }
 
-.fake-button-2:hover{
+.addition:hover, .subtraction:hover, .multiplication:hover, .division:hover{
     cursor: pointer;
     color: black;
     background-color: #58f216;
 }
 
-.fake-button-3:hover{
+.equals:hover{
     cursor: pointer;
     color: black;
     background-color: #58f216;
@@ -170,7 +170,7 @@ button{
     background-color: #58f216;
 }
 
-:clicked{
+.operator-pressed{
     color: black;
     background-color: #58f216;
 }

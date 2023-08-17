@@ -1,41 +1,58 @@
+// if a number is pressed after a result is given, reset the number to whatever is pressed
+// or if no operator is pressed reset the number to whatever is pressed
+
 const displayContainer = document.querySelector("#display");
 const numberButtons = document.querySelectorAll(".fake-button");
-const operatorButtons = document.querySelectorAll(".fake-button-2");
-let operatorSymbol = "";
-const equalsButton = document.querySelector(".fake-button-3");
+const equalsButton = document.querySelector(".equals");
+const addButton = document.querySelector(".addition");
+const subtractButton = document.querySelector(".subtraction");
+const divideButton = document.querySelector(".division");
+const multiplyButton = document.querySelector(".multiplication");
 const miscButtons = document.querySelectorAll(".fake-button-4");
 let operatorPressed = false;
 const equalsButtonPressed = false;
-const addition = (a, b) => a + b;
-const subtraction = (a, b) => a - b;
-const multiplication = (a, b) => a * b;
-const division = (a, b) => a / b;
-
 let firstNumber;
 let operator;
 let secondNumber;
 let result;
 
+const addition = (a, b) => a + b;
+const subtraction = (a, b) => a - b;
+const multiplication = (a, b) => a * b;
+const division = (a, b) => a / b;
+
+/* ---------- FUNCTIONS ---------- */
+
+function clearCalculation() {
+  displayContainer.textContent = ``;
+  operatorPressed = false;
+  firstNumber = undefined;
+  secondNumber = undefined;
+  operator = undefined;
+  result = undefined;
+}
+
 function operate(firstNumber, secondNumber, operator) {
   result = 0;
 
   switch (operator) {
-    case "add":
+    case "addition":
       result = addition(firstNumber, secondNumber);
       break;
-    case "subtract":
+    case "subtraction":
       result = subtraction(firstNumber, secondNumber);
       break;
-    case "multiply":
+    case "multiplication":
       result = multiplication(firstNumber, secondNumber);
       break;
-    case "divide":
+    case "division":
       result = division(firstNumber, secondNumber);
       break;
     default:
       break;
   }
 
+  displayContainer.textContent = result;
   return result;
 }
 
@@ -43,7 +60,7 @@ function operate(firstNumber, secondNumber, operator) {
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    console.log(`${button.id} has been pressed`);
+    console.log(`${button.textContent} has been pressed`);
     const numberValue = button.textContent;
 
     if (firstNumber === undefined) {
@@ -62,67 +79,62 @@ numberButtons.forEach((button) => {
   });
 });
 
-operatorButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    switch (button.id) {
-      case "addition":
-        // if there is a second number, calculate the result and use it as the first number of the next operation (make it the = button)
-        if (firstNumber && operator && secondNumber) {
-          result = operate(firstNumber, secondNumber, operator);
-          displayContainer.textContent = `${result}`;
-          operatorPressed = true;
-          firstNumber = result;
-          secondNumber = undefined;
-          operator = "add";
-        } else {
-          operator = "add";
-          operatorPressed = true;
-        }
-        // otherwise act normal
-        break;
-      case "subtraction":
-        if (firstNumber && operator && secondNumber) {
-          result = operate(firstNumber, secondNumber, operator);
-          displayContainer.textContent = `${result}`;
-          operatorPressed = true;
-          firstNumber = result;
-          secondNumber = undefined;
-          operator = "subtract";
-        } else {
-          operator = "subtract";
-          operatorPressed = true;
-        }
-        break;
-      case "division":
-        if (firstNumber === 0 || secondNumber === 0) {
-          displayContainer.textContent("You know that won't work");
-        } else if (firstNumber && secondNumber && operator) {
-          result = operate(firstNumber, secondNumber, operator);
-          displayContainer.textContent = `${result}`;
-          operatorPressed = true;
-          firstNumber = result;
-          secondNumber = undefined;
-          operator = "divide";
-        } else {
-          operator = "divide";
-          operatorPressed = true;
-        }
-        break;
-      case "multiplication":
-        if (firstNumber && secondNumber && operator) {
-          result = operate(firstNumber, secondNumber, operator);
-          displayContainer.textContent = `${result}`;
-          operatorPressed = true;
-          firstNumber = result;
-          secondNumber = undefined;
-          operator = "multiply";
-        } else {
-          operator = "multiply";
-          operatorPressed = true;
-        }
-        break;
-    }
-  });
+addButton.addEventListener("click", () => {
+  // if there is a second number, calculate the result and use it as the first number of the next operation (make it the = button)
+  if (firstNumber && operator && secondNumber) {
+    console.log("add pressed (with old calc)");
+    result = operate(firstNumber, secondNumber, operator);
+    operatorPressed = true;
+    firstNumber = result;
+    secondNumber = undefined;
+    operator = "addition";
+  } else {
+    console.log("add pressed");
+    operator = "addition";
+    operatorPressed = true;
+  }
+  // otherwise act normal
+});
+
+subtractButton.addEventListener("click", () => {
+  if (firstNumber && operator && secondNumber) {
+    result = operate(firstNumber, secondNumber, operator);
+    operatorPressed = true;
+    firstNumber = result;
+    secondNumber = undefined;
+    operator = "subtraction";
+  } else {
+    operator = "subtraction";
+    operatorPressed = true;
+  }
+});
+
+divideButton.addEventListener("click", () => {
+  if (firstNumber === 0 || secondNumber === 0) {
+    displayContainer.textContent("You know that won't work");
+  } else if (firstNumber && secondNumber && operator) {
+    result = operate(firstNumber, secondNumber, operator);
+    operatorPressed = true;
+    firstNumber = result;
+    secondNumber = undefined;
+    operator = "division";
+  } else {
+    operator = "division";
+    operatorPressed = true;
+  }
+});
+
+multiplyButton.addEventListener("click", () => {
+  if (firstNumber && secondNumber && operator) {
+    result = operate(firstNumber, secondNumber, operator);
+    operatorPressed = true;
+    firstNumber = result;
+    secondNumber = undefined;
+    operator = "multiplication";
+  } else {
+    operator = "multiplication";
+    operatorPressed = true;
+  }
 });
 
 miscButtons.forEach((button) => {
@@ -147,7 +159,6 @@ miscButtons.forEach((button) => {
           console.log("You're in the second loop");
           operatorPressed = false;
           operator = undefined;
-          operatorSymbol = undefined;
           displayContainer.textContent = `${firstNumber}`;
         } // To delete if there is a first number
         else if (
@@ -172,18 +183,14 @@ miscButtons.forEach((button) => {
       case "c":
         console.log("c pressed");
         //clears everything
-        displayContainer.textContent = "";
-        operatorPressed = false;
-        firstNumber = undefined;
-        secondNumber = undefined;
-        operator = undefined;
+        clearCalculation();
         break;
       case "ce":
         console.log("ce pressed");
         // clears last number/operation
         if (firstNumber && operator && secondNumber) {
           secondNumber = undefined;
-          displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
+          displayContainer.textContent = `${firstNumber}`;
         } else if (
           firstNumber &&
           operator &&
@@ -191,7 +198,6 @@ miscButtons.forEach((button) => {
         ) {
           operatorPressed = false;
           operator = undefined;
-          operatorSymbol = undefined;
           displayContainer.textContent = `${firstNumber}`;
         } else if (
           firstNumber &&
@@ -209,25 +215,21 @@ miscButtons.forEach((button) => {
 equalsButton.addEventListener("click", () => {
   if (!secondNumber) {
     console.log("There's no second number");
-    if (operator === "divide") {
+    if (operator === "division") {
       operatorPressed = false;
       operator = undefined;
-      operatorSymbol = undefined;
       displayContainer.textContent = `${firstNumber}`;
     } else {
       secondNumber = 0;
     }
   } else if (
     (firstNumber === 0 || secondNumber === 0) &&
-    operator === "divide"
+    operator === "division"
   ) {
     displayContainer.textContent = "pack it in.";
-    operatorPressed = false;
-    firstNumber = undefined;
-    secondNumber = undefined;
+    clearCalculation();
   } else {
     result = operate(firstNumber, secondNumber, operator);
-    displayContainer.textContent = `${result}`;
     operatorPressed = false;
     firstNumber = result;
     secondNumber = undefined;
