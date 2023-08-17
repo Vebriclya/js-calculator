@@ -169,3 +169,8 @@ button{
     color: black;
     background-color: #58f216;
 }
+
+:clicked{
+    color: black;
+    background-color: #58f216;
+}

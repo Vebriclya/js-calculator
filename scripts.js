@@ -73,14 +73,9 @@ operatorButtons.forEach((button) => {
           operatorPressed = true;
           firstNumber = result;
           secondNumber = undefined;
-          operatorSymbol = " + ";
           operator = "add";
-          displayContainer.textContent = `${operatorSymbol}`;
         } else {
-          operatorSymbol = " + ";
           operator = "add";
-          console.log(operatorSymbol);
-          displayContainer.textContent = `${operatorSymbol}`;
           operatorPressed = true;
         }
         // otherwise act normal
@@ -92,14 +87,9 @@ operatorButtons.forEach((button) => {
           operatorPressed = true;
           firstNumber = result;
           secondNumber = undefined;
-          operatorSymbol = " - ";
           operator = "subtract";
-          displayContainer.textContent = `${operatorSymbol}`;
         } else {
-          operatorSymbol = " - ";
           operator = "subtract";
-          console.log(operatorSymbol);
-          displayContainer.textContent = `${operatorSymbol}`;
           operatorPressed = true;
         }
         break;
@@ -112,15 +102,9 @@ operatorButtons.forEach((button) => {
           operatorPressed = true;
           firstNumber = result;
           secondNumber = undefined;
-          operatorSymbol = " ÷ ";
           operator = "divide";
-          console.log(operatorSymbol);
-          displayContainer.textContent = `${operatorSymbol}`;
         } else {
-          operatorSymbol = " ÷ ";
           operator = "divide";
-          console.log(operatorSymbol);
-          displayContainer.textContent = `${operatorSymbol}`;
           operatorPressed = true;
         }
         break;
@@ -131,14 +115,9 @@ operatorButtons.forEach((button) => {
           operatorPressed = true;
           firstNumber = result;
           secondNumber = undefined;
-          operatorSymbol = " x ";
           operator = "multiply";
-          displayContainer.textContent = `${operatorSymbol}`;
         } else {
-          operatorSymbol = " x ";
           operator = "multiply";
-          console.log(operatorSymbol);
-          displayContainer.textContent = `${operatorSymbol}`;
           operatorPressed = true;
         }
         break;
@@ -155,13 +134,13 @@ miscButtons.forEach((button) => {
         if (secondNumber !== undefined && operator && firstNumber) {
           if (secondNumber.toString().length === 1) {
             secondNumber = undefined;
-            displayContainer.textContent = `${firstNumber}${operatorSymbol}`;
+            displayContainer.textContent = `${firstNumber}`;
           } else if (!secondNumber.toString()) {
           } else {
             let numString = secondNumber.toString();
             secondNumber = parseInt(numString.slice(0, -1));
             console.log(secondNumber);
-            displayContainer.textContent = `${firstNumber}${operatorSymbol}${secondNumber}`;
+            displayContainer.textContent = `${secondNumber}`;
           }
         } // To delete if there is an operator
         else if (secondNumber === undefined && operator && firstNumber) {
