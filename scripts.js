@@ -1,6 +1,3 @@
-// if a number is pressed after a result is given, reset the number to whatever is pressed
-// or if no operator is pressed reset the number to whatever is pressed
-
 const displayContainer = document.querySelector("#display");
 const numberButtons = document.querySelectorAll(".fake-button");
 const equalsButton = document.querySelector(".equals");
@@ -22,6 +19,10 @@ const multiplication = (a, b) => a * b;
 const division = (a, b) => a / b;
 
 /* ---------- FUNCTIONS ---------- */
+function resetOperator() {
+  operatorPressed = false;
+  operator = undefined;
+}
 
 function removeOperatorIds() {
   addButton.removeAttribute("id");
@@ -60,6 +61,7 @@ function operate(firstNumber, secondNumber, operator) {
       break;
   }
   removeOperatorIds();
+  resetOperator();
   displayContainer.textContent = result;
   return result;
 }
@@ -71,7 +73,7 @@ numberButtons.forEach((button) => {
     console.log(`${button.textContent} has been pressed`);
     const numberValue = button.textContent;
 
-    if (firstNumber === undefined || firstNumber === result) {
+    if (firstNumber === undefined) {
       firstNumber = parseInt(numberValue);
       displayContainer.textContent = firstNumber;
     } else if (firstNumber !== undefined && !operatorPressed) {
@@ -158,7 +160,10 @@ miscButtons.forEach((button) => {
       case "backspace":
         console.log("backspace pressed");
         // To delete if there is a second number
-        if (secondNumber !== undefined && operator && firstNumber) {
+        if (
+          (secondNumber !== undefined && operator && firstNumber) ||
+          (secondNumber !== undefined && firstNumber)
+        ) {
           if (secondNumber.toString().length === 1) {
             secondNumber = undefined;
             displayContainer.textContent = `${firstNumber}`;
@@ -172,8 +177,8 @@ miscButtons.forEach((button) => {
         } // To delete if there is an operator
         else if (secondNumber === undefined && operator && firstNumber) {
           console.log("You're in the second loop");
-          operatorPressed = false;
-          operator = undefined;
+          resetOperator();
+          removeOperatorIds();
           displayContainer.textContent = `${firstNumber}`;
         } // To delete if there is a first number
         else if (
@@ -211,8 +216,8 @@ miscButtons.forEach((button) => {
           operator &&
           (secondNumber === "" || secondNumber === undefined)
         ) {
-          operatorPressed = false;
-          operator = undefined;
+          resetOperator();
+          removeOperatorIds();
           displayContainer.textContent = `${firstNumber}`;
         } else if (
           firstNumber &&
@@ -231,12 +236,9 @@ equalsButton.addEventListener("click", () => {
   if (!secondNumber) {
     console.log("There's no second number");
     if (operator === "division") {
-      operatorPressed = false;
-      operator = undefined;
-      displayContainer.textContent = `${firstNumber}`;
+      clearCalculation();
     } else {
-      secondNumber = 0;
-      removeOperatorIds();
+      clearCalculation();
     }
   } else if (
     (firstNumber === 0 || secondNumber === 0) &&
