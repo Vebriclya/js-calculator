@@ -19,6 +19,7 @@ const multiplication = (a, b) => a * b;
 const division = (a, b) => a / b;
 
 /* ---------- FUNCTIONS ---------- */
+
 function resetOperator() {
   operatorPressed = false;
   operator = undefined;
@@ -70,6 +71,10 @@ function operate(firstNumber, secondNumber, operator) {
 }
 
 /* ---------- EVENT LISTENERS ---------- */
+
+document.addEventListener("keydown", (event) => {
+  console.log(event.key);
+});
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
