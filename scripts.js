@@ -72,8 +72,10 @@ function operate(firstNumber, secondNumber, operator) {
 
 /* ---------- EVENT LISTENERS ---------- */
 
+// YOU ARE WORKING ON THIS BIT RIGHT HERE
 document.addEventListener("keydown", (event) => {
-  console.log(event.key);
+  const keyPressed = event.key;
+  console.log(keyPressed);
 });
 
 numberButtons.forEach((button) => {
