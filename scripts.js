@@ -31,8 +31,11 @@ function removeOperatorIds() {
   divideButton.removeAttribute("id");
 }
 
-function clearCalculation() {
-  displayContainer.textContent = ``;
+function clearCalculation(clearScreen) {
+  if (clearScreen === true) {
+    displayContainer.textContent = ``;
+  }
+
   operatorPressed = false;
   firstNumber = undefined;
   secondNumber = undefined;
@@ -74,16 +77,16 @@ numberButtons.forEach((button) => {
     const numberValue = button.textContent;
 
     if (firstNumber === undefined) {
-      firstNumber = parseInt(numberValue);
+      firstNumber = BigInt(numberValue);
       displayContainer.textContent = firstNumber;
     } else if (firstNumber !== undefined && !operatorPressed) {
-      firstNumber = parseInt(firstNumber.toString() + numberValue);
+      firstNumber = BigInt(firstNumber.toString() + numberValue);
       displayContainer.textContent = firstNumber;
     } else if (secondNumber === undefined && operatorPressed) {
-      secondNumber = parseInt(numberValue);
+      secondNumber = BigInt(numberValue);
       displayContainer.textContent = `${secondNumber}`;
     } else if (secondNumber !== undefined && !equalsButtonPressed) {
-      secondNumber = parseInt(secondNumber.toString() + numberValue);
+      secondNumber = BigInt(secondNumber.toString() + numberValue);
       displayContainer.textContent = `${secondNumber}`;
     }
   });
@@ -203,7 +206,7 @@ miscButtons.forEach((button) => {
       case "c":
         console.log("c pressed");
         //clears everything
-        clearCalculation();
+        clearCalculation((clearScreen = true));
         break;
       case "ce":
         console.log("ce pressed");
@@ -233,19 +236,17 @@ miscButtons.forEach((button) => {
 });
 
 equalsButton.addEventListener("click", () => {
-  if (!secondNumber) {
-    console.log("There's no second number");
-    if (operator === "division") {
-      clearCalculation();
-    } else {
-      clearCalculation();
-    }
-  } else if (
-    (firstNumber === 0 || secondNumber === 0) &&
-    operator === "division"
-  ) {
+  if ((firstNumber === 0 || secondNumber === 0) && operator === "division") {
+    console.log("divided by 0");
     displayContainer.textContent = "pack it in.";
     clearCalculation();
+  } else if (!secondNumber) {
+    console.log("There's no second number");
+    if (operator === "division") {
+      clearCalculation((clearScreen = true));
+    } else {
+      clearCalculation((clearScreen = true));
+    }
   } else {
     result = operate(firstNumber, secondNumber, operator);
     operatorPressed = false;
