@@ -15,12 +15,34 @@ let operator;
 let secondNumber;
 let result;
 
-const addition = (a, b) => a + b;
-const subtraction = (a, b) => a - b;
-const multiplication = (a, b) => a * b;
-const division = (a, b) => a / b;
+const addition = (a, b) => parseFloat(a) + parseFloat(b);
+const subtraction = (a, b) => parseFloat(a) - parseFloat(b);
+const multiplication = (a, b) => parseFloat(a) * parseFloat(b);
+const division = (a, b) => parseFloat(a) / parseFloat(b);
 
 /* ---------- FUNCTIONS ---------- */
+
+function ceFunction() {
+  if (firstNumber && operator && secondNumber) {
+    secondNumber = undefined;
+    displayContainer.textContent = `${firstNumber}`;
+  } else if (
+    firstNumber &&
+    operator &&
+    (secondNumber === "" || secondNumber === undefined)
+  ) {
+    resetOperator();
+    removeOperatorIds();
+    displayContainer.textContent = `${firstNumber}`;
+  } else if (
+    firstNumber &&
+    (operator === "" || operator === undefined) &&
+    (secondNumber === "" || secondNumber === undefined)
+  ) {
+    firstNumber = undefined;
+    displayContainer.textContent = "";
+  }
+}
 
 function resetOperator() {
   operatorPressed = false;
@@ -34,6 +56,11 @@ function removeOperatorIds() {
   divideButton.removeAttribute("id");
 }
 
+function resetDecimal() {
+  decimalPressed = false;
+  decimalButton.removeAttribute("id");
+}
+
 function clearCalculation(clearScreen) {
   if (clearScreen === true) {
     displayContainer.textContent = ``;
@@ -45,6 +72,7 @@ function clearCalculation(clearScreen) {
   operator = undefined;
   result = undefined;
   removeOperatorIds();
+  resetDecimal();
 }
 
 function operate(firstNumber, secondNumber, operator) {
@@ -68,6 +96,8 @@ function operate(firstNumber, secondNumber, operator) {
   }
   removeOperatorIds();
   resetOperator();
+  resetDecimal();
+
   const roundedResult = Math.round(result * 1000) / 1000;
   displayContainer.textContent = roundedResult;
   return roundedResult;
@@ -75,17 +105,40 @@ function operate(firstNumber, secondNumber, operator) {
 
 function logNumbers(numberValue) {
   if (firstNumber === undefined) {
-    firstNumber = parseInt(numberValue);
+    firstNumber = numberValue;
     displayContainer.textContent = firstNumber;
   } else if (firstNumber !== undefined && !operatorPressed) {
-    firstNumber = parseInt(firstNumber.toString() + numberValue);
+    firstNumber = firstNumber.toString() + numberValue;
     displayContainer.textContent = firstNumber;
   } else if (secondNumber === undefined && operatorPressed) {
-    secondNumber = parseInt(numberValue);
+    secondNumber = numberValue;
     displayContainer.textContent = `${secondNumber}`;
   } else if (secondNumber !== undefined && !equalsButtonPressed) {
-    secondNumber = parseInt(secondNumber.toString() + numberValue);
+    secondNumber = secondNumber.toString() + numberValue;
     displayContainer.textContent = `${secondNumber}`;
+  }
+}
+
+function decimalFunction() {
+  if (decimalPressed === false) {
+    decimalPressed = true;
+    console.log(decimalPressed);
+    decimalButton.setAttribute("id", "disabled");
+
+    if (firstNumber === undefined) {
+      firstNumber = "0.";
+      displayContainer.textContent = firstNumber;
+    } else if (firstNumber !== undefined && !operatorPressed) {
+      firstNumber = firstNumber.toString() + ".";
+      displayContainer.textContent = firstNumber;
+    } else if (secondNumber === undefined && operatorPressed) {
+      secondNumber = "0.";
+      displayContainer.textContent = secondNumber;
+    } else if (secondNumber !== undefined && !equalsButtonPressed) {
+      secondNumber = secondNumber.toString() + ".";
+      displayContainer.textContent = secondNumber;
+    }
+  } else if (decimalPressed === true) {
   }
 }
 
@@ -102,7 +155,7 @@ function backspaceFunction() {
     } else if (!secondNumber.toString()) {
     } else {
       let numString = secondNumber.toString();
-      secondNumber = parseInt(numString.slice(0, -1));
+      secondNumber = numString.slice(0, -1);
       console.log(secondNumber);
       displayContainer.textContent = `${secondNumber}`;
     }
@@ -124,7 +177,7 @@ function backspaceFunction() {
       displayContainer.textContent = "";
     } else {
       let numString = firstNumber.toString();
-      firstNumber = parseInt(numString.slice(0, -1));
+      firstNumber = numString.slice(0, -1);
       console.log(firstNumber);
       displayContainer.textContent = `${firstNumber}`;
     }
@@ -166,6 +219,7 @@ function multiplyFunction() {
     operatorPressed = true;
     multiplyButton.setAttribute("id", "operator-pressed");
   }
+  resetDecimal();
 }
 
 function subtractFunction() {
@@ -181,6 +235,7 @@ function subtractFunction() {
     operatorPressed = true;
     subtractButton.setAttribute("id", "operator-pressed");
   }
+  resetDecimal();
 }
 
 function addFunction() {
@@ -197,6 +252,7 @@ function addFunction() {
     operatorPressed = true;
     addButton.setAttribute("id", "operator-pressed");
   }
+  resetDecimal();
 }
 
 function divideFunction() {
@@ -214,6 +270,7 @@ function divideFunction() {
     operatorPressed = true;
     divideButton.setAttribute("id", "operator-pressed");
   }
+  resetDecimal();
 }
 
 /* ---------- EVENT LISTENERS ---------- */
@@ -228,7 +285,7 @@ document.addEventListener("keydown", (event) => {
     logNumbers(keyPressed);
     console.log(`${keyPressed} inside if statement`);
   }
-  if (keyPressed === "Backspace") {
+  if (keyPressed === "Backspace" || keyPressed === "backspace") {
     backspaceFunction();
   }
   if (keyPressed === "Enter") {
@@ -245,6 +302,13 @@ document.addEventListener("keydown", (event) => {
   }
   if (keyPressed === "+") {
     addFunction();
+  }
+  if (keyPressed === ".") {
+    decimalFunction();
+  }
+  if (keyPressed === "c" || keyPressed === "C") {
+    console.log("made it into the clear calculation loop");
+    clearCalculation((clearScreen = true));
   }
 });
 
@@ -287,25 +351,7 @@ miscButtons.forEach((button) => {
       case "ce":
         console.log("ce pressed");
         // clears last number/operation
-        if (firstNumber && operator && secondNumber) {
-          secondNumber = undefined;
-          displayContainer.textContent = `${firstNumber}`;
-        } else if (
-          firstNumber &&
-          operator &&
-          (secondNumber === "" || secondNumber === undefined)
-        ) {
-          resetOperator();
-          removeOperatorIds();
-          displayContainer.textContent = `${firstNumber}`;
-        } else if (
-          firstNumber &&
-          (operator === "" || operator === undefined) &&
-          (secondNumber === "" || secondNumber === undefined)
-        ) {
-          firstNumber = undefined;
-          displayContainer.textContent = "";
-        }
+        ceFunction();
         break;
     }
   });
@@ -316,25 +362,5 @@ equalsButton.addEventListener("click", () => {
 });
 
 decimalButton.addEventListener("click", () => {
-  if (decimalPressed === false) {
-    decimalPressed = true;
-    console.log("decimal pressed");
-    decimalButton.setAttribute("id", "disabled");
-    if (firstNumber === undefined) {
-      firstNumber = "0.";
-      displayContainer.textContent = firstNumber;
-    }
-  } else if ((decimalPressed = true)) {
-  }
-  /*  } else if (firstNumber !== undefined && !operatorPressed) {
-    firstNumber = parseInt(firstNumber.toString() + numberValue);
-    displayContainer.textContent = firstNumber;
-  } else if (secondNumber === undefined && operatorPressed) {
-    secondNumber = parseInt(numberValue);
-    displayContainer.textContent = `${secondNumber}`;
-  } else if (secondNumber !== undefined && !equalsButtonPressed) {
-    secondNumber = parseInt(secondNumber.toString() + numberValue);
-    displayContainer.textContent = `${secondNumber}`;
-  }
-  */
+  decimalFunction();
 });
