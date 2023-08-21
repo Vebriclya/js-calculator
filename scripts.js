@@ -56,6 +56,12 @@ function removeOperatorIds() {
   divideButton.removeAttribute("id");
 }
 
+function setDecimal() {
+  decimalPressed = true;
+  console.log("decimal already pressed");
+  decimalButton.setAttribute("id", "disabled");
+}
+
 function resetDecimal() {
   decimalPressed = false;
   decimalButton.removeAttribute("id");
@@ -120,6 +126,22 @@ function logNumbers(numberValue) {
 }
 
 function decimalFunction() {
+  let hasDecimal;
+  if (firstNumber != undefined) {
+    let num1String = firstNumber.toString();
+    let decimalPoint = ".";
+    hasDecimal = num1String.includes(decimalPoint);
+  }
+  if (secondNumber != undefined) {
+    let num2String = secondNumber.toString();
+    let decimalPoint = ".";
+    hasDecimal = num2String.includes(decimalPoint);
+  }
+
+  if (hasDecimal) {
+    setDecimal();
+  }
+
   if (decimalPressed === false) {
     decimalPressed = true;
     console.log(decimalPressed);
