@@ -8,6 +8,8 @@ const multiplyButton = document.querySelector(".multiplication");
 const miscButtons = document.querySelectorAll(".fake-button-4");
 let operatorPressed = false;
 const equalsButtonPressed = false;
+const decimalButton = document.querySelector(".decimal-point");
+let decimalPressed = false;
 let firstNumber;
 let operator;
 let secondNumber;
@@ -311,4 +313,28 @@ miscButtons.forEach((button) => {
 
 equalsButton.addEventListener("click", () => {
   equalsFunction();
+});
+
+decimalButton.addEventListener("click", () => {
+  if (decimalPressed === false) {
+    decimalPressed = true;
+    console.log("decimal pressed");
+    decimalButton.setAttribute("id", "disabled");
+    if (firstNumber === undefined) {
+      firstNumber = "0.";
+      displayContainer.textContent = firstNumber;
+    }
+  } else if ((decimalPressed = true)) {
+  }
+  /*  } else if (firstNumber !== undefined && !operatorPressed) {
+    firstNumber = parseInt(firstNumber.toString() + numberValue);
+    displayContainer.textContent = firstNumber;
+  } else if (secondNumber === undefined && operatorPressed) {
+    secondNumber = parseInt(numberValue);
+    displayContainer.textContent = `${secondNumber}`;
+  } else if (secondNumber !== undefined && !equalsButtonPressed) {
+    secondNumber = parseInt(secondNumber.toString() + numberValue);
+    displayContainer.textContent = `${secondNumber}`;
+  }
+  */
 });
