@@ -209,7 +209,11 @@ function backspaceFunction() {
 }
 
 function equalsFunction() {
-  if ((firstNumber === 0 || secondNumber === 0) && operator === "division") {
+  console.log("equals function entered");
+  if (
+    (firstNumber === "0" || secondNumber === "0") &&
+    operator === "division"
+  ) {
     console.log("divided by 0");
     displayContainer.textContent = "pack it in.";
     clearCalculation();
