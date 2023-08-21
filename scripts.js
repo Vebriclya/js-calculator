@@ -66,8 +66,9 @@ function operate(firstNumber, secondNumber, operator) {
   }
   removeOperatorIds();
   resetOperator();
-  displayContainer.textContent = result;
-  return result;
+  const roundedResult = Math.round(result * 1000) / 1000;
+  displayContainer.textContent = roundedResult;
+  return roundedResult;
 }
 
 /* ---------- EVENT LISTENERS ---------- */
@@ -84,16 +85,16 @@ numberButtons.forEach((button) => {
     const numberValue = button.textContent;
 
     if (firstNumber === undefined) {
-      firstNumber = BigInt(numberValue);
+      firstNumber = parseInt(numberValue);
       displayContainer.textContent = firstNumber;
     } else if (firstNumber !== undefined && !operatorPressed) {
-      firstNumber = BigInt(firstNumber.toString() + numberValue);
+      firstNumber = parseInt(firstNumber.toString() + numberValue);
       displayContainer.textContent = firstNumber;
     } else if (secondNumber === undefined && operatorPressed) {
-      secondNumber = BigInt(numberValue);
+      secondNumber = parseInt(numberValue);
       displayContainer.textContent = `${secondNumber}`;
     } else if (secondNumber !== undefined && !equalsButtonPressed) {
-      secondNumber = BigInt(secondNumber.toString() + numberValue);
+      secondNumber = parseInt(secondNumber.toString() + numberValue);
       displayContainer.textContent = `${secondNumber}`;
     }
   });
